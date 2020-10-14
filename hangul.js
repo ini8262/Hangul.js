@@ -462,6 +462,30 @@
         });
     };
 
+    /** HUN
+     * 초성검색을 위해 신규 추가
+     */
+    var index = function (haystack, needle) {
+        function getCho(string) {
+            return disassemble(string, true).map(function (arry) {
+                return arry[0];
+            });
+        }
+
+        var hex = getCho(haystack).join(''),
+            nex = getCho(needle).join(''),
+            re = new RegExp(nex, 'gi'),
+            result;
+
+        if (!needle.length) return -1;
+
+        if ((result = re.exec(hex))) {
+            return result.index;
+        }
+
+        return -1;
+    }; 
+
     function Searcher(string) {
         this.string = string;
         this.disassembled = disassemble(string).join('');
@@ -505,6 +529,7 @@
         a: assemble, // alias for assemble
         search: search,
         rangeSearch: rangeSearch,
+        index : index,
         Searcher: Searcher,
         endsWithConsonant: endsWithConsonant,
         endsWith: endsWith,
